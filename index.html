@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Pets - Pet Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Happy Pets</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#anasayfa">Anasayfa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#hizmetler">Hizmetler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#urunler">Ürünler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#blog">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#sss">SSS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#randevu">Randevu Al</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#hakkimizda">Hakkımızda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#yorumlar">Yorumlar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#iletisim">İletişim</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="anasayfa" class="hero-slider">
+      <div class="slide active" style="background-image: url('https://images.pexels.com/photos/6131007/pexels-photo-6131007.jpeg')">
+        <div class="container h-100">
+          <div class="row h-100 align-items-center">
+            <div class="col-md-6 animate__animated animate__fadeInLeft">
+              <h1 class="display-4 text-white">Evcil Dostlarınız İçin En İyi Bakım</h1>
+              <p class="lead text-white mb-4">Profesyonel ekibimizle yanınızdayız</p>
+              <a href="#randevu" class="btn btn-lg btn-secondary">Hemen Randevu Al</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Diğer slider'lar -->
+    </section>
+
+    <!-- Hizmetler -->
+    <section id="hizmetler" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Hizmetlerimiz</h2>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <img src="https://images.pexels.com/photos/6235233/pexels-photo-6235233.jpeg" class="card-img-top" alt="Veteriner" />
+              <div class="card-body">
+                <h5 class="card-title">Veteriner Hizmetleri</h5>
+                <p class="card-text">Uzman veteriner ekibimizle sağlık kontrolleri ve tedavi hizmetleri</p>
+                <a href="#randevu" class="btn btn-primary">Randevu Al</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <img src="https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg" class="card-img-top" alt="Kuaför" />
+              <div class="card-body">
+                <h5 class="card-title">Kuaför & Bakım</h5>
+                <p class="card-text">Profesyonel tıraş ve bakım hizmetleri</p>
+                <a href="#randevu" class="btn btn-primary">Randevu Al</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <img src="https://images.pexels.com/photos/7788657/pexels-photo-7788657.jpeg" class="card-img-top" alt="Pet Hotel" />
+              <div class="card-body">
+                <h5 class="card-title">Pet Hotel</h5>
+                <p class="card-text">Güvenli ve konforlu konaklama hizmeti</p>
+                <a href="#randevu" class="btn btn-primary">Randevu Al</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ürünler Bölümü -->
+    <section id="urunler" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Ürünlerimiz</h2>
+        <div class="filter-buttons text-center mb-4">
+          <button class="filter-btn active" data-filter="all">Tümü</button>
+          <button class="filter-btn" data-filter="kedi">Kedi</button>
+          <button class="filter-btn" data-filter="kopek">Köpek</button>
+          <button class="filter-btn" data-filter="kus">Kuş</button>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="product-card">
+              <img src="https://images.pexels.com/photos/1378724/pexels-photo-1378724.jpeg" class="card-img-top" alt="Premium Kedi Maması">
+              <div class="card-body">
+                <h5>Premium Kedi Maması</h5>
+                <p class="price">149.99 ₺</p>
+                <button class="btn btn-primary">Sepete Ekle</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="product-card">
+              <img src="https://images.pexels.com/photos/825949/pexels-photo-825949.jpeg" class="card-img-top" alt="Köpek Oyuncağı">
+              <div class="card-body">
+                <h5>Köpek Oyuncağı</h5>
+                <p class="price">79.99 ₺</p>
+                <button class="btn btn-primary">Sepete Ekle</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="product-card">
+              <img src="https://images.pexels.com/photos/6958022/pexels-photo-6958022.jpeg" class="card-img-top" alt="Kedi Kumu">
+              <div class="card-body">
+                <h5>Bentonit Kedi Kumu</h5>
+                <p class="price">199.99 ₺</p>
+                <button class="btn btn-primary">Sepete Ekle</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Bölümü -->
+    <section id="blog" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-4">Blog</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card blog-card" data-blog-id="1">
+              <img src="https://images.pexels.com/photos/1904105/pexels-photo-1904105.jpeg" class="card-img-top" alt="Kedi Bakımı">
+              <div class="card-body">
+                <h5 class="card-title">Kedilerde Doğru Beslenme</h5>
+                <p class="card-text">Kedinizin sağlıklı ve mutlu olması için beslenme önerileri...</p>
+                <button class="btn btn-primary read-more" data-blog-id="1">Devamını Oku</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card blog-card" data-blog-id="2">
+              <img src="https://images.pexels.com/photos/1870301/pexels-photo-1870301.jpeg" class="card-img-top" alt="Köpek Eğitimi">
+              <div class="card-body">
+                <h5 class="card-title">Köpek Eğitiminde İpuçları</h5>
+                <p class="card-text">Köpeğinizi eğitirken dikkat etmeniz gerekenler...</p>
+                <button class="btn btn-primary read-more" data-blog-id="2">Devamını Oku</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card blog-card" data-blog-id="3">
+              <img src="https://images.pexels.com/photos/7788657/pexels-photo-7788657.jpeg" class="card-img-top" alt="Pet Bakımı">
+              <div class="card-body">
+                <h5 class="card-title">Evcil Hayvan Bakım Rehberi</h5>
+                <p class="card-text">Evcil hayvanınızın bakımı için temel bilgiler...</p>
+                <button class="btn btn-primary read-more" data-blog-id="3">Devamını Oku</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Modal -->
+    <div class="modal fade" id="blogModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="blogTitle"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <img id="blogImage" src="" alt="" class="img-fluid rounded mb-4">
+            <div id="blogContent" class="blog-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hakkımızda -->
+    <section id="hakkimizda" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-4">Hakkımızda</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <p>Happy Pets, evcil hayvanlarınız için en iyi bakım ve hizmetleri sunan bir pet shop'tur. Uzman ekibimiz ve geniş ürün yelpazemizle, evcil dostlarınızın tüm ihtiyaçlarını karşılıyoruz.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SSS Bölümü -->
+    <section id="sss" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Sıkça Sorulan Sorular</h2>
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                Randevu nasıl alabilirim?
+              </button>
+            </h3>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Randevu almak için web sitemizden online randevu formunu doldurabilir veya telefonla bize ulaşabilirsiniz.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Müşteri Yorumları -->
+    <section id="yorumlar" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Müşteri Yorumları</h2>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <img src="https://via.placeholder.com/80" alt="Müşteri 1">
+                <h5>Ahmet Yılmaz</h5>
+                <p class="stars">★★★★★</p>
+                <p>Happy Pets ekibi harika! Evcil hayvanımın bakımı için en iyi yeri buldum.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <img src="https://via.placeholder.com/80" alt="Müşteri 2">
+                <h5>Ayşe Demir</h5>
+                <p class="stars">★★★★★</p>
+                <p>Hizmet kalitesi mükemmel. Herkese tavsiye ederim.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <img src="https://via.placeholder.com/80" alt="Müşteri 3">
+                <h5>Mehmet Kaya</h5>
+                <p class="stars">★★★★★</p>
+                <p>Evcil hayvanım burada çok mutlu. Teşekkürler Happy Pets!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Randevu Formu -->
+    <section id="randevu" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-4">Randevu Al</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <form id="randevuForm">
+              <div class="mb-3">
+                <label for="isim" class="form-label">Adınız Soyadınız</label>
+                <input type="text" class="form-control" id="isim" required />
+              </div>
+              <div class="mb-3">
+                <label for="telefon" class="form-label">Telefon</label>
+                <input type="tel" class="form-control" id="telefon" required />
+              </div>
+              <div class="mb-3">
+                <label for="hizmet" class="form-label">Hizmet Seçin</label>
+                <select class="form-control" id="hizmet" required>
+                  <option value="">Seçiniz</option>
+                  <option value="veteriner">Veteriner Hizmetleri</option>
+                  <option value="kuafor">Kuaför & Bakım</option>
+                  <option value="hotel">Pet Hotel</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="tarih" class="form-label">Randevu Tarihi</label>
+                <input type="date" class="form-control" id="tarih" required />
+              </div>
+              <button type="submit" class="btn btn-primary">Randevu Oluştur</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Konum -->
+    <section id="konum" class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Bizi Ziyaret Edin</h2>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div id="map" class="rounded" style="height: 400px;"></div>
+          </div>
+          <div class="col-md-6">
+            <h4>Adres Bilgilerimiz</h4>
+            <p><i class="fas fa-map-marker-alt me-2"></i> Örnek Mahallesi, Pet Caddesi No:123</p>
+            <p><i class="fas fa-phone me-2"></i> +90 555 123 4567</p>
+            <p><i class="fas fa-envelope me-2"></i> info@happypets.com</p>
+            <p><i class="fas fa-clock me-2"></i> Pazartesi - Cumartesi: 09:00 - 18:00</p>
+            <p><i class="fas fa-info-circle me-2"></i> Pazar günleri sadece acil veteriner hizmeti verilmektedir.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- İletişim Formu -->
+    <section id="iletisim" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-4">İletişim</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <form id="iletisimForm">
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Adınız Soyadınız" required>
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control" placeholder="E-posta Adresiniz" required>
+              </div>
+              <div class="mb-3">
+                <textarea class="form-control" rows="5" placeholder="Mesajınız" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Gönder</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Canlı Destek -->
+    <div class="live-chat-widget">
+      <button class="btn btn-primary rounded-circle" id="liveChatBtn">
+        <i class="fas fa-comments"></i>
+      </button>
+    </div>
+
+    <!-- Tema değiştirme butonu -->
+    <button class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Sosyal Medya -->
+    <footer class="bg-primary text-white text-center py-3">
+      <div class="container">
+        <div class="social-media-links">
+          <a href="#" class="social-link text-white me-3"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-link text-white me-3"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link text-white"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p class="mt-3 mb-0">&copy; 2023 Happy Pets. Tüm hakları saklıdır.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
