@@ -216,11 +216,14 @@ class ProductFilter {
     }
 
     init() {
-        this.buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.buttons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const filter = btn.dataset.filter;
+        this.buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                this.buttons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                // Get filter value
+                const filter = button.getAttribute('data-filter');
                 this.filterProducts(filter);
             });
         });
@@ -228,8 +231,8 @@ class ProductFilter {
 
     filterProducts(filter) {
         this.products.forEach(product => {
-            const category = product.dataset.category;
-            if (filter === 'all' || category === filter) {
+            const category = product.getAttribute('data-category');
+            if (filter === 'all' || filter === category) {
                 product.style.display = 'block';
             } else {
                 product.style.display = 'none';
@@ -237,6 +240,8 @@ class ProductFilter {
         });
     }
 }
+
+const productFilter = new ProductFilter();
 
 // Blog yönetimi için yeni sınıf ekleyin
 class BlogManager {
@@ -633,7 +638,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new ContactForm();
     new ThemeManager();
     new SliderManager();
-    new ProductFilter();
     new BlogManager();
     new CartManager();
     new FavoritesManager();

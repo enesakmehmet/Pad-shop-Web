@@ -7,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script src="map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2HuR7UjAqcaItatl7Q7SQYhmpLaHicMU&callback=initMap" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
       img {
@@ -20,6 +21,12 @@
         height: 80px;
         object-fit: cover;
         border-radius: 50%;
+      }
+
+      #map {
+        width: 100%;
+        height: 400px;
+        border-radius: 8px;
       }
     </style>
   </head>
@@ -108,7 +115,7 @@
           </div>
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8" class="card-img-top" alt="Pet Hotel" />
+              <img src="https://images.pexels.com/photos/1350591/pexels-photo-1350591.jpeg" class="card-img-top" alt="Pet Hotel" />
               <div class="card-body">
                 <h5 class="card-title">Pet Hotel</h5>
                 <p class="card-text">Güvenli ve konforlu konaklama hizmeti</p>
@@ -132,7 +139,7 @@
         </div>
         <div class="row">
           <div class="col-md-4 mb-4">
-            <div class="product-card">
+            <div class="product-card" data-category="kedi">
               <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119" class="card-img-top" alt="Premium Kedi Maması">
               <div class="card-body">
                 <h5>Premium Kedi Maması</h5>
@@ -142,7 +149,7 @@
             </div>
           </div>
           <div class="col-md-4 mb-4">
-            <div class="product-card">
+            <div class="product-card" data-category="kopek">
               <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97" class="card-img-top" alt="Köpek Oyuncağı">
               <div class="card-body">
                 <h5>Köpek Oyuncağı</h5>
@@ -152,7 +159,7 @@
             </div>
           </div>
           <div class="col-md-4 mb-4">
-            <div class="product-card">
+            <div class="product-card" data-category="kedi">
               <img src="https://cdn.pixabay.com/photo/2020/03/31/16/18/cat-4988407_1280.jpg" class="card-img-top" alt="Kedi Kumu">
               <div class="card-body">
                 <h5>Bentonit Kedi Kumu</h5>
@@ -171,32 +178,32 @@
         <h2 class="text-center mb-4">Blog</h2>
         <div class="row">
           <div class="col-md-4 mb-4">
-            <div class="card blog-card" data-blog-id="1">
-              <img src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_1280.jpg" class="card-img-top" alt="Kedi Bakımı">
+            <div class="card blog-card h-100">
+              <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800" class="card-img-top" alt="Köpek Bakımı" style="height: 200px; object-fit: cover;">
               <div class="card-body">
-                <h5 class="card-title">Kedilerde Doğru Beslenme</h5>
-                <p class="card-text">Kedinizin sağlıklı ve mutlu olması için beslenme önerileri...</p>
-                <button class="btn btn-primary read-more" data-blog-id="1">Devamını Oku</button>
+                <h5 class="card-title">Köpek Bakımı Hakkında İpuçları</h5>
+                <p class="card-text">Köpeğinizin sağlıklı ve mutlu kalması için önemli bakım ipuçları...</p>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blogModal1">Devamını Oku</button>
               </div>
             </div>
           </div>
           <div class="col-md-4 mb-4">
-            <div class="card blog-card" data-blog-id="2">
-              <img src="https://cdn.pixabay.com/photo/2016/11/22/23/13/black-dog-1851106_1280.jpg" class="card-img-top" alt="Köpek Eğitimi">
+            <div class="card blog-card h-100">
+              <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800" class="card-img-top" alt="Kedi Beslenmesi" style="height: 200px; object-fit: cover;">
               <div class="card-body">
-                <h5 class="card-title">Köpek Eğitiminde İpuçları</h5>
-                <p class="card-text">Köpeğinizi eğitirken dikkat etmeniz gerekenler...</p>
-                <button class="btn btn-primary read-more" data-blog-id="2">Devamını Oku</button>
+                <h5 class="card-title">Kediler İçin Doğru Beslenme</h5>
+                <p class="card-text">Kediniz için en uygun beslenme düzeni ve öneriler...</p>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blogModal2">Devamını Oku</button>
               </div>
             </div>
           </div>
           <div class="col-md-4 mb-4">
-            <div class="card blog-card" data-blog-id="3">
-              <img src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg" class="card-img-top" alt="Pet Bakımı">
+            <div class="card blog-card h-100">
+              <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=800" class="card-img-top" alt="Evcil Hayvan Eğitimi" style="height: 200px; object-fit: cover;">
               <div class="card-body">
-                <h5 class="card-title">Evcil Hayvan Bakım Rehberi</h5>
-                <p class="card-text">Evcil hayvanınızın bakımı için temel bilgiler...</p>
-                <button class="btn btn-primary read-more" data-blog-id="3">Devamını Oku</button>
+                <h5 class="card-title">Evcil Hayvan Eğitiminde Altın Kurallar</h5>
+                <p class="card-text">Evcil hayvanınızı eğitirken dikkat etmeniz gerekenler...</p>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blogModal3">Devamını Oku</button>
               </div>
             </div>
           </div>
@@ -204,17 +211,68 @@
       </div>
     </section>
 
-    <!-- Blog Modal -->
-    <div class="modal fade" id="blogModal" tabindex="-1" aria-hidden="true">
+    <!-- Blog Modals -->
+    <!-- Modal 1 -->
+    <div class="modal fade" id="blogModal1" tabindex="-1" aria-labelledby="blogModal1Label" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="blogTitle"></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <h5 class="modal-title" id="blogModal1Label">Köpek Bakımı Hakkında İpuçları</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <img id="blogImage" src="" alt="" class="img-fluid rounded mb-4">
-            <div id="blogContent" class="blog-content"></div>
+            <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800" class="img-fluid mb-3" alt="Köpek Bakımı">
+            <p>Köpeğinizin sağlıklı ve mutlu bir yaşam sürmesi için düzenli bakım çok önemlidir. İşte size bazı önemli ipuçları:</p>
+            <h6>1. Düzenli Egzersiz</h6>
+            <p>Köpeğinizi her gün düzenli olarak yürüyüşe çıkarın. Bu hem fiziksel sağlığı hem de mental gelişimi için çok önemlidir.</p>
+            <h6>2. Beslenme</h6>
+            <p>Yaşına ve ırkına uygun kaliteli mama tercih edin. Düzenli beslenme saatleri oluşturun.</p>
+            <h6>3. Tüy Bakımı</h6>
+            <p>Köpeğinizin tüy yapısına uygun fırça ile düzenli tarama yapın. Bu sayede tüy dökülmesini kontrol altında tutabilirsiniz.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="blogModal2" tabindex="-1" aria-labelledby="blogModal2Label" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="blogModal2Label">Kediler İçin Doğru Beslenme</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800" class="img-fluid mb-3" alt="Kedi Beslenmesi">
+            <p>Kedinizin sağlıklı bir yaşam sürmesi için doğru beslenme çok önemlidir. İşte size önemli beslenme önerileri:</p>
+            <h6>1. Yaşa Uygun Mama Seçimi</h6>
+            <p>Kedinizin yaşına ve aktivite düzeyine uygun mama seçimi yapın. Yavru, yetişkin ve yaşlı kedilerin besin ihtiyaçları farklıdır.</p>
+            <h6>2. Su Tüketimi</h6>
+            <p>Kedilerin yeterli su tüketmesi çok önemlidir. Temiz ve taze su her zaman ulaşılabilir olmalıdır.</p>
+            <h6>3. Porsiyon Kontrolü</h6>
+            <p>Aşırı beslenmeyi önlemek için günlük porsiyon kontrolü yapın. Obezite kedilerde ciddi sağlık sorunlarına yol açabilir.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal fade" id="blogModal3" tabindex="-1" aria-labelledby="blogModal3Label" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="blogModal3Label">Evcil Hayvan Eğitiminde Altın Kurallar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=800" class="img-fluid mb-3" alt="Evcil Hayvan Eğitimi">
+            <p>Evcil hayvanınızı eğitirken dikkat etmeniz gereken önemli noktalar:</p>
+            <h6>1. Tutarlı Olun</h6>
+            <p>Eğitimde tutarlılık çok önemlidir. Tüm aile üyeleri aynı kuralları uygulamalıdır.</p>
+            <h6>2. Pozitif Pekiştirme</h6>
+            <p>Ceza yerine ödül temelli eğitim yaklaşımı kullanın. Bu, evcil hayvanınızın daha hızlı öğrenmesini sağlar.</p>
+            <h6>3. Sabırlı Olun</h6>
+            <p>Her evcil hayvanın öğrenme hızı farklıdır. Sabırlı olun ve küçük ilerlemeleri takdir edin.</p>
           </div>
         </div>
       </div>
@@ -315,7 +373,7 @@
           <div class="col-md-4 mb-4">
             <div class="testimonial-card">
               <div class="testimonial-content text-center">
-                <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c" alt="Müşteri 4" class="mb-3">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800" alt="Müşteri 4" class="mb-3" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
                 <h5>Ali Öztürk</h5>
                 <p class="text-muted">Hamster Sahibi</p>
                 <div class="rating mb-2">
@@ -361,7 +419,7 @@
                   <i class="fas fa-star text-warning"></i>
                   <i class="fas fa-star text-warning"></i>
                 </div>
-                <p>"Akvaryum malzemeleri ve balık çeşitleri konusunda bu kadar geniş bir seçenek sunan başka bir yer görmedim. Teşekkürler Happy Pets!"</p>
+                <p>"Muhabbet kuşum için aldığım kafes ve aksesuarlar tam istediğim gibi. Çalışanların ilgisi ve bilgisi gerçekten takdire şayan."</p>
               </div>
             </div>
           </div>
@@ -404,23 +462,11 @@
       </div>
     </section>
 
-    <!-- Konum -->
+    <!-- Google Maps Section -->
     <section id="konum" class="py-5">
       <div class="container">
         <h2 class="text-center mb-4">Bizi Ziyaret Edin</h2>
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <div id="map" class="rounded" style="height: 400px;"></div>
-          </div>
-          <div class="col-md-6">
-            <h4>Adres Bilgilerimiz</h4>
-            <p><i class="fas fa-map-marker-alt me-2"></i> Örnek Mahallesi, Pet Caddesi No:123</p>
-            <p><i class="fas fa-phone me-2"></i> +90 555 123 4567</p>
-            <p><i class="fas fa-envelope me-2"></i> info@happypets.com</p>
-            <p><i class="fas fa-clock me-2"></i> Pazartesi - Cumartesi: 09:00 - 18:00</p>
-            <p><i class="fas fa-info-circle me-2"></i> Pazar günleri sadece acil veteriner hizmeti verilmektedir.</p>
-          </div>
-        </div>
+        <div id="map" class="shadow"></div>
       </div>
     </section>
 
