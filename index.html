@@ -9,6 +9,19 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .testimonial-content img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    </style>
   </head>
   <body>
     <!-- Navbar -->
@@ -54,7 +67,7 @@
 
     <!-- Hero Section -->
     <section id="anasayfa" class="hero-slider">
-      <div class="slide active" style="background-image: url('https://images.pexels.com/photos/6131007/pexels-photo-6131007.jpeg')">
+      <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1920&q=80')">
         <div class="container h-100">
           <div class="row h-100 align-items-center">
             <div class="col-md-6 animate__animated animate__fadeInLeft">
@@ -75,7 +88,7 @@
         <div class="row">
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="https://images.pexels.com/photos/6235233/pexels-photo-6235233.jpeg" class="card-img-top" alt="Veteriner" />
+              <img src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def" class="card-img-top" alt="Veteriner" />
               <div class="card-body">
                 <h5 class="card-title">Veteriner Hizmetleri</h5>
                 <p class="card-text">Uzman veteriner ekibimizle sağlık kontrolleri ve tedavi hizmetleri</p>
@@ -85,7 +98,7 @@
           </div>
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg" class="card-img-top" alt="Kuaför" />
+              <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7" class="card-img-top" alt="Kuaför" />
               <div class="card-body">
                 <h5 class="card-title">Kuaför & Bakım</h5>
                 <p class="card-text">Profesyonel tıraş ve bakım hizmetleri</p>
@@ -95,7 +108,7 @@
           </div>
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="https://images.pexels.com/photos/7788657/pexels-photo-7788657.jpeg" class="card-img-top" alt="Pet Hotel" />
+              <img src="https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8" class="card-img-top" alt="Pet Hotel" />
               <div class="card-body">
                 <h5 class="card-title">Pet Hotel</h5>
                 <p class="card-text">Güvenli ve konforlu konaklama hizmeti</p>
@@ -120,31 +133,31 @@
         <div class="row">
           <div class="col-md-4 mb-4">
             <div class="product-card">
-              <img src="https://images.pexels.com/photos/1378724/pexels-photo-1378724.jpeg" class="card-img-top" alt="Premium Kedi Maması">
+              <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119" class="card-img-top" alt="Premium Kedi Maması">
               <div class="card-body">
                 <h5>Premium Kedi Maması</h5>
                 <p class="price">149.99 ₺</p>
-                <button class="btn btn-primary">Sepete Ekle</button>
+                <button class="btn btn-primary add-to-cart" data-product="Premium Kedi Maması" data-price="149.99">Sepete Ekle</button>
               </div>
             </div>
           </div>
           <div class="col-md-4 mb-4">
             <div class="product-card">
-              <img src="https://images.pexels.com/photos/825949/pexels-photo-825949.jpeg" class="card-img-top" alt="Köpek Oyuncağı">
+              <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97" class="card-img-top" alt="Köpek Oyuncağı">
               <div class="card-body">
                 <h5>Köpek Oyuncağı</h5>
                 <p class="price">79.99 ₺</p>
-                <button class="btn btn-primary">Sepete Ekle</button>
+                <button class="btn btn-primary add-to-cart" data-product="Köpek Oyuncağı" data-price="79.99">Sepete Ekle</button>
               </div>
             </div>
           </div>
           <div class="col-md-4 mb-4">
             <div class="product-card">
-              <img src="https://images.pexels.com/photos/6958022/pexels-photo-6958022.jpeg" class="card-img-top" alt="Kedi Kumu">
+              <img src="https://cdn.pixabay.com/photo/2020/03/31/16/18/cat-4988407_1280.jpg" class="card-img-top" alt="Kedi Kumu">
               <div class="card-body">
                 <h5>Bentonit Kedi Kumu</h5>
                 <p class="price">199.99 ₺</p>
-                <button class="btn btn-primary">Sepete Ekle</button>
+                <button class="btn btn-primary add-to-cart" data-product="Bentonit Kedi Kumu" data-price="199.99">Sepete Ekle</button>
               </div>
             </div>
           </div>
@@ -159,7 +172,7 @@
         <div class="row">
           <div class="col-md-4 mb-4">
             <div class="card blog-card" data-blog-id="1">
-              <img src="https://images.pexels.com/photos/1904105/pexels-photo-1904105.jpeg" class="card-img-top" alt="Kedi Bakımı">
+              <img src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_1280.jpg" class="card-img-top" alt="Kedi Bakımı">
               <div class="card-body">
                 <h5 class="card-title">Kedilerde Doğru Beslenme</h5>
                 <p class="card-text">Kedinizin sağlıklı ve mutlu olması için beslenme önerileri...</p>
@@ -169,7 +182,7 @@
           </div>
           <div class="col-md-4 mb-4">
             <div class="card blog-card" data-blog-id="2">
-              <img src="https://images.pexels.com/photos/1870301/pexels-photo-1870301.jpeg" class="card-img-top" alt="Köpek Eğitimi">
+              <img src="https://cdn.pixabay.com/photo/2016/11/22/23/13/black-dog-1851106_1280.jpg" class="card-img-top" alt="Köpek Eğitimi">
               <div class="card-body">
                 <h5 class="card-title">Köpek Eğitiminde İpuçları</h5>
                 <p class="card-text">Köpeğinizi eğitirken dikkat etmeniz gerekenler...</p>
@@ -179,7 +192,7 @@
           </div>
           <div class="col-md-4 mb-4">
             <div class="card blog-card" data-blog-id="3">
-              <img src="https://images.pexels.com/photos/7788657/pexels-photo-7788657.jpeg" class="card-img-top" alt="Pet Bakımı">
+              <img src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg" class="card-img-top" alt="Pet Bakımı">
               <div class="card-body">
                 <h5 class="card-title">Evcil Hayvan Bakım Rehberi</h5>
                 <p class="card-text">Evcil hayvanınızın bakımı için temel bilgiler...</p>
@@ -243,35 +256,112 @@
     <!-- Müşteri Yorumları -->
     <section id="yorumlar" class="py-5">
       <div class="container">
-        <h2 class="text-center mb-4">Müşteri Yorumları</h2>
+        <h2 class="text-center mb-5">Mutlu Müşterilerimiz</h2>
         <div class="row">
-          <div class="col-md-4 mb-3">
+          <div class="col-md-4 mb-4">
             <div class="testimonial-card">
-              <div class="testimonial-content">
-                <img src="https://via.placeholder.com/80" alt="Müşteri 1">
-                <h5>Ahmet Yılmaz</h5>
-                <p class="stars">★★★★★</p>
-                <p>Happy Pets ekibi harika! Evcil hayvanımın bakımı için en iyi yeri buldum.</p>
+              <div class="testimonial-content text-center">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt="Müşteri 1" class="mb-3">
+                <h5>Ayşe Yılmaz</h5>
+                <p class="text-muted">Köpek Sahibi</p>
+                <div class="rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                </div>
+                <p>"Happy Pets'te köpeğim Max için aldığım bakım hizmetlerinden çok memnunum. Profesyonel ekip ve sevgi dolu yaklaşımları için teşekkürler!"</p>
               </div>
             </div>
           </div>
-          <div class="col-md-4 mb-3">
+          
+          <div class="col-md-4 mb-4">
             <div class="testimonial-card">
-              <div class="testimonial-content">
-                <img src="https://via.placeholder.com/80" alt="Müşteri 2">
-                <h5>Ayşe Demir</h5>
-                <p class="stars">★★★★★</p>
-                <p>Hizmet kalitesi mükemmel. Herkese tavsiye ederim.</p>
+              <div class="testimonial-content text-center">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt="Müşteri 2" class="mb-3">
+                <h5>Mehmet Demir</h5>
+                <p class="text-muted">Kedi Sahibi</p>
+                <div class="rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star-half-alt text-warning"></i>
+                </div>
+                <p>"Kedim Pamuk için aldığım mama ve oyuncakların kalitesi muhteşem. Üstelik fiyatlar da çok uygun. Kesinlikle tavsiye ediyorum!"</p>
               </div>
             </div>
           </div>
-          <div class="col-md-4 mb-3">
+          
+          <div class="col-md-4 mb-4">
             <div class="testimonial-card">
-              <div class="testimonial-content">
-                <img src="https://via.placeholder.com/80" alt="Müşteri 3">
-                <h5>Mehmet Kaya</h5>
-                <p class="stars">★★★★★</p>
-                <p>Evcil hayvanım burada çok mutlu. Teşekkürler Happy Pets!</p>
+              <div class="testimonial-content text-center">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" alt="Müşteri 3" class="mb-3">
+                <h5>Zeynep Kaya</h5>
+                <p class="text-muted">Kuş Sahibi</p>
+                <div class="rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                </div>
+                <p>"Muhabbet kuşum için aldığım kafes ve aksesuarlar tam istediğim gibi. Çalışanların ilgisi ve bilgisi gerçekten takdire şayan."</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="testimonial-card">
+              <div class="testimonial-content text-center">
+                <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c" alt="Müşteri 4" class="mb-3">
+                <h5>Ali Öztürk</h5>
+                <p class="text-muted">Hamster Sahibi</p>
+                <div class="rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                </div>
+                <p>"Hamsterim için aldığım oyun parkuru ve yuva malzemeleri çok kaliteli. Fiyat/performans açısından harika bir mağaza!"</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="testimonial-card">
+              <div class="testimonial-content text-center">
+                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4" alt="Müşteri 5" class="mb-3">
+                <h5>Selin Arslan</h5>
+                <p class="text-muted">Kedi ve Köpek Sahibi</p>
+                <div class="rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star-half-alt text-warning"></i>
+                </div>
+                <p>"Hem kedim hem köpeğim için düzenli olarak Happy Pets'i tercih ediyorum. Veteriner hizmetleri ve ürün çeşitliliği mükemmel!"</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="testimonial-card">
+              <div class="testimonial-content text-center">
+                <img src="https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c" alt="Müşteri 6" class="mb-3">
+                <h5>Aslı Yıldız</h5>
+                <p class="text-muted">Akvaryum Sahibi</p>
+                <div class="rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                </div>
+                <p>"Akvaryum malzemeleri ve balık çeşitleri konusunda bu kadar geniş bir seçenek sunan başka bir yer görmedim. Teşekkürler Happy Pets!"</p>
               </div>
             </div>
           </div>

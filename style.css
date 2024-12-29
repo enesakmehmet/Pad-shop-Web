@@ -13,6 +13,28 @@
   --light-color: #1a1a1a;
 }
 
+/* Dark Mode Styles */
+[data-theme="dark"] {
+    --primary-color: #1a1a1a;
+    --text-color: #ffffff;
+    --bg-color: #333333;
+    --card-bg: #424242;
+}
+
+[data-theme="dark"] body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .navbar {
+    background-color: var(--primary-color) !important;
+}
+
 body {
   background: var(--light-color);
   color: var(--dark-color);
@@ -86,56 +108,161 @@ body {
     object-fit: cover;
 }
 
-/* Product Card Styles */
+/* Product Cards */
 .product-card {
-    border: 1px solid #eee;
-    border-radius: 8px;
-    overflow: hidden;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
-    position: relative;
+    height: 100%;
+    overflow: hidden;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.price {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 1rem;
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-/* Testimonial Card Styles */
-.testimonial-card {
-    background: white;
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+.product-card .card-body {
     padding: 20px;
+}
+
+.product-card h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.product-card .price {
+    font-size: 1.3rem;
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Blog Cards */
+.blog-card {
+    background: #fff;
     border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    margin: 20px 0;
-    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    height: 100%;
+    overflow: hidden;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+}
+
+.blog-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.blog-card:hover img {
+    transform: scale(1.05);
+}
+
+.blog-card .card-body {
+    padding: 20px;
+}
+
+.blog-card .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.blog-card .card-text {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Dark Mode Styles for Cards */
+[data-theme="dark"] .product-card,
+[data-theme="dark"] .blog-card {
+    background: var(--card-bg);
+}
+
+[data-theme="dark"] .product-card h5,
+[data-theme="dark"] .blog-card .card-title {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .product-card .price {
+    color: #3291ff;
+}
+
+[data-theme="dark"] .blog-card .card-text {
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
     height: 100%;
 }
 
-.testimonial-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.testimonial-card:hover {
+    transform: translateY(-5px);
 }
 
 .testimonial-content img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    margin-bottom: 15px;
-    border: 3px solid #4A90E2;
+    object-fit: cover;
+    margin: 0 auto;
+    border: 3px solid #007bff;
 }
 
-.stars {
-    color: #ffd700;
-    letter-spacing: 2px;
+.testimonial-content h5 {
+    margin-top: 15px;
+    color: #333;
+}
+
+.testimonial-content .text-muted {
+    font-size: 0.9rem;
+}
+
+.testimonial-content .rating {
+    color: #ffc107;
+}
+
+.testimonial-content p {
+    font-style: italic;
+    margin-top: 10px;
+    color: #666;
+    line-height: 1.6;
+}
+
+[data-theme="dark"] .testimonial-card {
+    background: var(--card-bg);
+}
+
+[data-theme="dark"] .testimonial-content h5 {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .testimonial-content p {
+    color: var(--text-color);
 }
 
 /* Live Chat Widget */
@@ -221,6 +348,38 @@ body {
   color: var(--dark-color);
 }
 
+/* WhatsApp Chat Button */
+.whatsapp-chat {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.whatsapp-button {
+  background-color: #25d366;
+  color: white;
+  padding: 15px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.whatsapp-button:hover {
+  transform: scale(1.1);
+  background-color: #128C7E;
+}
+
+.whatsapp-button i {
+  font-size: 24px;
+}
+
 /* Theme Toggle */
 .theme-toggle {
   position: fixed;
@@ -234,6 +393,71 @@ body {
   color: white;
   border: none;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Dark mode toggle button styles */
+.theme-switch {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 999;
+    background: #007bff;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.theme-switch:hover {
+    transform: scale(1.1);
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+  position: fixed;
+  bottom: 150px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.dark-mode-button {
+  background-color: #2c3e50;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.dark-mode-button:hover {
+  transform: scale(1.1);
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .navbar {
+  background-color: #2c3e50 !important;
+}
+
+.dark-mode .card {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .card-body {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
 }
 
 /* Slider */
@@ -257,36 +481,6 @@ body {
 
 .slide.active {
   opacity: 1;
-}
-
-/* Blog styles */
-.blog-card {
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.blog-card:hover {
-    transform: translateY(-10px);
-}
-
-#blogModal .modal-body img {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-#blogContent {
-    line-height: 1.6;
-}
-
-#blogContent h3 {
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-#blogContent h4 {
-    color: var(--secondary-color);
-    margin: 15px 0;
 }
 
 /* Blog styles */
@@ -320,4 +514,60 @@ body {
     max-height: 400px;
     width: 100%;
     object-fit: cover;
+}
+
+/* Shopping Cart Styles */
+.cart-icon {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    z-index: 999;
+    background: #007bff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-total {
+    margin-top: 20px;
+    text-align: right;
+    padding: 10px;
+}
+
+[data-theme="dark"] .modal-content {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .cart-item {
+    border-bottom-color: #444;
 }

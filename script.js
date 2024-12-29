@@ -315,6 +315,318 @@ class BlogManager {
     }
 }
 
+// Sepet Yönetimi
+class CartManager {
+    constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.total = 0;
+        this.init();
+    }
+
+    init() {
+        this.updateCartCount();
+        this.bindEvents();
+        this.calculateTotal();
+    }
+
+    bindEvents() {
+        document.querySelectorAll('.btn-add-to-cart').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const product = {
+                    id: e.target.dataset.id,
+                    name: e.target.dataset.name,
+                    price: parseFloat(e.target.dataset.price),
+                    quantity: 1
+                };
+                this.addToCart(product);
+                this.showNotification('Ürün sepete eklendi!');
+            });
+        });
+    }
+
+    addToCart(product) {
+        const existingItem = this.cart.find(item => item.id === product.id);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            this.cart.push(product);
+        }
+        this.updateCart();
+    }
+
+    updateCart() {
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+        this.updateCartCount();
+        this.calculateTotal();
+    }
+
+    updateCartCount() {
+        const count = this.cart.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+    }
+
+    calculateTotal() {
+        this.total = this.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        document.getElementById('cartTotal').textContent = this.total.toFixed(2) + ' ₺';
+    }
+
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }, 100);
+    }
+}
+
+// Form Validasyon Geliştirmeleri
+class FormValidator {
+    static validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    static validatePhone(phone) {
+        return /^(\+90|0)?[0-9]{10}$/.test(phone.replace(/\s/g, ''));
+    }
+
+    static validateDate(date) {
+        const selected = new Date(date);
+        const today = new Date();
+        return selected >= today;
+    }
+
+    static showError(element, message) {
+        const parent = element.parentElement;
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        parent.appendChild(errorDiv);
+        setTimeout(() => errorDiv.remove(), 3000);
+    }
+}
+
+// Animasyon Yöneticisi
+class AnimationManager {
+    static animate(element, animation, duration = 1000) {
+        element.style.animation = `${animation} ${duration}ms`;
+        element.addEventListener('animationend', () => {
+            element.style.animation = '';
+        }, {once: true});
+    }
+
+    static fadeIn(element) {
+        element.style.opacity = '0';
+        element.style.display = 'block';
+        setTimeout(() => element.style.opacity = '1', 10);
+    }
+
+    static fadeOut(element) {
+        element.style.opacity = '0';
+        setTimeout(() => element.style.display = 'none', 300);
+    }
+}
+
+// Fiyat Hesaplayıcı
+class PriceCalculator {
+    static calculateDiscount(price, discountPercent) {
+        return price - (price * discountPercent / 100);
+    }
+
+    static formatPrice(price) {
+        return price.toFixed(2) + ' ₺';
+    }
+
+    static calculateInstallment(price, months) {
+        const interest = 1.2; // %20 faiz
+        return (price * interest) / months;
+    }
+}
+
+// Yerel Depolama Yöneticisi
+class StorageManager {
+    static set(key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) {
+            console.error('Storage error:', e);
+        }
+    }
+
+    static get(key) {
+        try {
+            return JSON.parse(localStorage.getItem(key));
+        } catch (e) {
+            console.error('Storage error:', e);
+            return null;
+        }
+    }
+
+    static remove(key) {
+        localStorage.removeItem(key);
+    }
+
+    static clear() {
+        localStorage.clear();
+    }
+}
+
+// Favori Ürünler Yöneticisi
+class FavoritesManager {
+    constructor() {
+        this.favorites = StorageManager.get('favorites') || [];
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.updateFavoriteButtons();
+    }
+
+    bindEvents() {
+        document.querySelectorAll('.btn-favorite').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const productId = e.target.dataset.id;
+                this.toggleFavorite(productId);
+            });
+        });
+    }
+
+    toggleFavorite(productId) {
+        const index = this.favorites.indexOf(productId);
+        if (index === -1) {
+            this.favorites.push(productId);
+            this.showNotification('Ürün favorilere eklendi!');
+        } else {
+            this.favorites.splice(index, 1);
+            this.showNotification('Ürün favorilerden çıkarıldı!');
+        }
+        StorageManager.set('favorites', this.favorites);
+        this.updateFavoriteButtons();
+    }
+
+    updateFavoriteButtons() {
+        document.querySelectorAll('.btn-favorite').forEach(btn => {
+            const productId = btn.dataset.id;
+            btn.classList.toggle('active', this.favorites.includes(productId));
+        });
+    }
+
+    showNotification(message) {
+        // Bildirim gösterme mantığı...
+    }
+}
+
+// Dark Mode Toggle
+const themeToggle = document.getElementById('theme-toggle');
+const moonIcon = themeToggle.querySelector('i');
+
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'dark') {
+        moonIcon.classList.replace('fa-moon', 'fa-sun');
+    }
+}
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    // Toggle icon
+    moonIcon.classList.toggle('fa-moon');
+    moonIcon.classList.toggle('fa-sun');
+});
+
+// Dark Mode Functions
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    card.classList.toggle('dark-mode');
+  });
+  
+  // Save preference
+  const isDarkMode = document.body.classList.contains('dark-mode');
+  localStorage.setItem('darkMode', isDarkMode);
+}
+
+// Check saved preference on load
+window.onload = function() {
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (isDarkMode) {
+    document.body.classList.add('dark-mode');
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.classList.add('dark-mode');
+    });
+  }
+}
+
+// Shopping Cart Functionality
+let cart = [];
+const cartIcon = document.getElementById('cart-icon');
+const cartCount = document.querySelector('.cart-count');
+const cartItems = document.getElementById('cart-items');
+const cartTotal = document.getElementById('cart-total');
+const checkoutBtn = document.getElementById('checkout-btn');
+
+// Add to Cart Function
+function addToCart(productName, price) {
+    cart.push({ name: productName, price: price });
+    updateCart();
+}
+
+// Update Cart Display
+function updateCart() {
+    cartCount.textContent = cart.length;
+
+    // Update cart items display
+    cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <span>${item.name}</span>
+            <span>${item.price.toFixed(2)} TL</span>
+            <button onclick="removeFromCart('${item.name}')" class="btn btn-sm btn-danger">Sil</button>
+        </div>
+    `).join('');
+
+    // Update total
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    cartTotal.textContent = `${total.toFixed(2)} TL`;
+}
+
+// Remove from Cart
+function removeFromCart(productName) {
+    const index = cart.findIndex(item => item.name === productName);
+    if (index > -1) {
+        cart.splice(index, 1);
+        updateCart();
+    }
+}
+
+// Checkout Function
+checkoutBtn.addEventListener('click', () => {
+    if (cart.length === 0) {
+        alert('Sepetiniz boş!');
+        return;
+    }
+
+    alert('Siparişiniz alındı! Teşekkür ederiz.');
+    cart = [];
+    updateCart();
+    $('#cartModal').modal('hide');
+});
+
 // Widget'ları başlat
 document.addEventListener('DOMContentLoaded', () => {
     new LiveChatWidget();
@@ -323,6 +635,8 @@ document.addEventListener('DOMContentLoaded', () => {
     new SliderManager();
     new ProductFilter();
     new BlogManager();
+    new CartManager();
+    new FavoritesManager();
 });
 
 // Google Maps Başlangıç
