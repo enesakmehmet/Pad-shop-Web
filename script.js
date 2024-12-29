@@ -126,22 +126,23 @@ const randevuManager = new RandevuManager();
 // Geliştirici konsolu için yardımcı fonksiyon
 window.randevulariGoster = () => randevuManager.randevulariGoster();
 
-// Canlı Destek Widget
+// Canlı Destek
 class LiveChatWidget {
     constructor() {
-        this.button = document.getElementById('liveChatBtn');
-        this.initializeEventListeners();
+      this.button = document.getElementById('liveChatBtn');
+      this.initializeEventListeners();
     }
-
+  
     initializeEventListeners() {
-        this.button.addEventListener('click', () => this.openChat());
+      this.button.addEventListener('click', () => this.openChat());
     }
-
+  
     openChat() {
-        // Chat penceresi açma mantığı
-        alert('Canlı destek yakında hizmetinizde olacak!');
+      window.open('https://wa.me/905551234567', '_blank');
     }
-}
+  }
+  
+  new LiveChatWidget();
 
 // İletişim Formu
 class ContactForm {
@@ -329,158 +330,136 @@ class CartManager {
     }
 
     init() {
-        this.updateCartCount();
-        this.bindEvents();
-        this.calculateTotal();
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            this.bindEvents();
+            this.updateCart();
+        });
     }
 
     bindEvents() {
-        document.querySelectorAll('.btn-add-to-cart').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const product = {
-                    id: e.target.dataset.id,
-                    name: e.target.dataset.name,
-                    price: parseFloat(e.target.dataset.price),
-                    quantity: 1
-                };
-                this.addToCart(product);
-                this.showNotification('Ürün sepete eklendi!');
+        // Add to cart buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productCard = e.target.closest('.product-card');
+                if (productCard) {
+                    const product = {
+                        id: productCard.dataset.productId,
+                        name: productCard.querySelector('.card-title').textContent,
+                        price: parseFloat(productCard.dataset.price),
+                        quantity: 1
+                    };
+                    this.addToCart(product);
+                }
             });
         });
+
+        // Checkout button
+        const checkoutBtn = document.getElementById('checkout-btn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', () => this.checkout());
+        }
     }
 
     addToCart(product) {
         const existingItem = this.cart.find(item => item.id === product.id);
+        
         if (existingItem) {
-            existingItem.quantity++;
+            existingItem.quantity += 1;
         } else {
             this.cart.push(product);
         }
+
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+        this.updateCart();
+        this.showNotification(`${product.name} sepete eklendi!`);
+    }
+
+    removeFromCart(productId) {
+        this.cart = this.cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(this.cart));
         this.updateCart();
     }
 
+    updateQuantity(productId, newQuantity) {
+        const item = this.cart.find(item => item.id === productId);
+        if (item) {
+            item.quantity = Math.max(1, newQuantity);
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+            this.updateCart();
+        }
+    }
+
     updateCart() {
+        const cartItems = document.getElementById('cart-items');
+        const cartCount = document.querySelector('.cart-count');
+        const cartTotal = document.getElementById('cart-total');
+
+        // Update cart count
+        const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.textContent = totalItems;
+
+        // Update cart items
+        cartItems.innerHTML = this.cart.map(item => `
+            <div class="cart-item d-flex justify-content-between align-items-center mb-3 p-2 border rounded">
+                <div class="cart-item-details">
+                    <h6 class="mb-1">${item.name}</h6>
+                    <div class="price-info text-muted">
+                        <small>Birim Fiyat: ${item.price.toFixed(2)} TL</small>
+                    </div>
+                    <div class="quantity-controls mt-2">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="cartManager.updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                        <span class="mx-2">${item.quantity} adet</span>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="cartManager.updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                    </div>
+                </div>
+                <div class="cart-item-actions text-end">
+                    <div class="item-total fw-bold mb-2">
+                        Toplam: ${(item.price * item.quantity).toFixed(2)} TL
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="cartManager.removeFromCart('${item.id}')">
+                        <i class="fas fa-trash"></i> Kaldır
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        // Update total
+        this.total = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        cartTotal.textContent = `${this.total.toFixed(2)} TL`;
+
+        // Show empty cart message if no items
+        if (this.cart.length === 0) {
+            cartItems.innerHTML = '<div class="text-center text-muted p-3">Sepetiniz boş</div>';
+        }
+    }
+
+    checkout() {
+        if (this.cart.length === 0) {
+            this.showNotification('Sepetiniz boş!', 'warning');
+            return;
+        }
+
+        // Here you would typically integrate with a payment system
+        alert('Ödeme sistemi entegrasyonu yapılacak');
+        
+        // For now, just clear the cart
+        this.cart = [];
         localStorage.setItem('cart', JSON.stringify(this.cart));
-        this.updateCartCount();
-        this.calculateTotal();
+        this.updateCart();
+        this.showNotification('Siparişiniz alındı!', 'success');
     }
 
-    updateCartCount() {
-        const count = this.cart.reduce((total, item) => total + item.quantity, 0);
-        document.getElementById('cartCount').textContent = count;
-    }
-
-    calculateTotal() {
-        this.total = this.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-        document.getElementById('cartTotal').textContent = this.total.toFixed(2) + ' ₺';
-    }
-
-    showNotification(message) {
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.textContent = message;
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 2000);
-        }, 100);
+    showNotification(message, type = 'success') {
+        const notificationManager = new NotificationManager();
+        notificationManager.showNotification(message, type);
     }
 }
 
-// Form Validasyon Geliştirmeleri
-class FormValidator {
-    static validateEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    static validatePhone(phone) {
-        return /^(\+90|0)?[0-9]{10}$/.test(phone.replace(/\s/g, ''));
-    }
-
-    static validateDate(date) {
-        const selected = new Date(date);
-        const today = new Date();
-        return selected >= today;
-    }
-
-    static showError(element, message) {
-        const parent = element.parentElement;
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message';
-        errorDiv.textContent = message;
-        parent.appendChild(errorDiv);
-        setTimeout(() => errorDiv.remove(), 3000);
-    }
-}
-
-// Animasyon Yöneticisi
-class AnimationManager {
-    static animate(element, animation, duration = 1000) {
-        element.style.animation = `${animation} ${duration}ms`;
-        element.addEventListener('animationend', () => {
-            element.style.animation = '';
-        }, {once: true});
-    }
-
-    static fadeIn(element) {
-        element.style.opacity = '0';
-        element.style.display = 'block';
-        setTimeout(() => element.style.opacity = '1', 10);
-    }
-
-    static fadeOut(element) {
-        element.style.opacity = '0';
-        setTimeout(() => element.style.display = 'none', 300);
-    }
-}
-
-// Fiyat Hesaplayıcı
-class PriceCalculator {
-    static calculateDiscount(price, discountPercent) {
-        return price - (price * discountPercent / 100);
-    }
-
-    static formatPrice(price) {
-        return price.toFixed(2) + ' ₺';
-    }
-
-    static calculateInstallment(price, months) {
-        const interest = 1.2; // %20 faiz
-        return (price * interest) / months;
-    }
-}
-
-// Yerel Depolama Yöneticisi
-class StorageManager {
-    static set(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (e) {
-            console.error('Storage error:', e);
-        }
-    }
-
-    static get(key) {
-        try {
-            return JSON.parse(localStorage.getItem(key));
-        } catch (e) {
-            console.error('Storage error:', e);
-            return null;
-        }
-    }
-
-    static remove(key) {
-        localStorage.removeItem(key);
-    }
-
-    static clear() {
-        localStorage.clear();
-    }
-}
+// Initialize cart manager - make sure it's created after DOM content is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.cartManager = new CartManager();
+});
 
 // Favori Ürünler Yöneticisi
 class FavoritesManager {
@@ -639,7 +618,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new ThemeManager();
     new SliderManager();
     new BlogManager();
-    new CartManager();
     new FavoritesManager();
 });
 
@@ -696,3 +674,411 @@ function handleMapError() {
         `;
     }
 }
+
+// Ürün Arama Yöneticisi
+class SearchManager {
+    constructor() {
+        this.searchInput = document.getElementById('searchInput');
+        this.products = document.querySelectorAll('.product-card');
+        this.init();
+    }
+
+    init() {
+        if (this.searchInput) {
+            this.searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
+        }
+    }
+
+    handleSearch(query) {
+        query = query.toLowerCase();
+        this.products.forEach(product => {
+            const title = product.querySelector('.card-title').textContent.toLowerCase();
+            const description = product.querySelector('.card-text').textContent.toLowerCase();
+            
+            if (title.includes(query) || description.includes(query)) {
+                product.style.display = '';
+            } else {
+                product.style.display = 'none';
+            }
+        });
+    }
+}
+
+// Ürün Değerlendirme Yöneticisi
+class RatingManager {
+    constructor() {
+        this.storageKey = 'productRatings';
+        this.ratings = this.loadRatings();
+        this.init();
+    }
+
+    init() {
+        this.addRatingStars();
+        this.bindEvents();
+    }
+
+    loadRatings() {
+        return JSON.parse(localStorage.getItem(this.storageKey)) || {};
+    }
+
+    saveRatings() {
+        localStorage.setItem(this.storageKey, JSON.stringify(this.ratings));
+    }
+
+    addRatingStars() {
+        const products = document.querySelectorAll('.product-card');
+        products.forEach(product => {
+            const productId = product.dataset.productId;
+            const ratingContainer = document.createElement('div');
+            ratingContainer.className = 'rating-container mt-2';
+            ratingContainer.innerHTML = `
+                <div class="stars">
+                    ${this.createStars(productId)}
+                </div>
+                <small class="rating-count">(${this.getRatingCount(productId)} değerlendirme)</small>
+            `;
+            product.querySelector('.card-body').appendChild(ratingContainer);
+        });
+    }
+
+    createStars(productId) {
+        const rating = this.getAverageRating(productId);
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            starsHtml += `<i class="fas fa-star ${i <= rating ? 'active' : ''}" data-rating="${i}"></i>`;
+        }
+        return starsHtml;
+    }
+
+    bindEvents() {
+        document.querySelectorAll('.product-card').forEach(product => {
+            const stars = product.querySelectorAll('.stars i');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    const productId = product.dataset.productId;
+                    this.rateProduct(productId, rating);
+                });
+            });
+        });
+    }
+
+    rateProduct(productId, rating) {
+        if (!this.ratings[productId]) {
+            this.ratings[productId] = [];
+        }
+        this.ratings[productId].push(rating);
+        this.saveRatings();
+        this.updateProductRating(productId);
+        notificationManager.showNotification('Değerlendirmeniz için teşekkürler!');
+    }
+
+    getAverageRating(productId) {
+        const ratings = this.ratings[productId] || [];
+        if (ratings.length === 0) return 0;
+        return ratings.reduce((a, b) => a + b, 0) / ratings.length;
+    }
+
+    getRatingCount(productId) {
+        return (this.ratings[productId] || []).length;
+    }
+
+    updateProductRating(productId) {
+        const product = document.querySelector(`[data-product-id="${productId}"]`);
+        if (product) {
+            const stars = product.querySelectorAll('.stars i');
+            const rating = this.getAverageRating(productId);
+            stars.forEach((star, index) => {
+                star.classList.toggle('active', index < rating);
+            });
+            product.querySelector('.rating-count').textContent = 
+                `(${this.getRatingCount(productId)} değerlendirme)`;
+        }
+    }
+}
+
+// Bildirim Yöneticisi
+class NotificationManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.createNotificationContainer();
+    }
+
+    createNotificationContainer() {
+        const container = document.createElement('div');
+        container.id = 'notification-container';
+        container.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        `;
+        document.body.appendChild(container);
+    }
+
+    showNotification(message, type = 'success', duration = 3000) {
+        const notification = document.createElement('div');
+        notification.className = `alert alert-${type} animate__animated animate__fadeIn`;
+        notification.textContent = message;
+        
+        document.getElementById('notification-container').appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.replace('animate__fadeIn', 'animate__fadeOut');
+            setTimeout(() => notification.remove(), 1000);
+        }, duration);
+    }
+}
+
+// Initialize new features
+const searchManager = new SearchManager();
+const ratingManager = new RatingManager();
+const notificationManager = new NotificationManager();
+
+// Quick View Manager
+class QuickViewManager {
+    constructor() {
+        this.modal = document.getElementById('quickViewModal');
+        this.currentProduct = null;
+        this.init();
+    }
+
+    init() {
+        document.querySelectorAll('.quick-view').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productId = e.target.closest('.quick-view').dataset.productId;
+                this.showQuickView(productId);
+            });
+        });
+
+        // Quantity controls
+        document.getElementById('decreaseQuantity').addEventListener('click', () => {
+            const input = document.getElementById('quickViewQuantity');
+            if (input.value > 1) input.value = parseInt(input.value) - 1;
+        });
+
+        document.getElementById('increaseQuantity').addEventListener('click', () => {
+            const input = document.getElementById('quickViewQuantity');
+            input.value = parseInt(input.value) + 1;
+        });
+
+        // Add to cart from quick view
+        document.querySelector('.quick-view-add-to-cart').addEventListener('click', () => {
+            if (this.currentProduct) {
+                const quantity = parseInt(document.getElementById('quickViewQuantity').value);
+                cartManager.addToCart({
+                    ...this.currentProduct,
+                    quantity: quantity
+                });
+                bootstrap.Modal.getInstance(this.modal).hide();
+            }
+        });
+    }
+
+    showQuickView(productId) {
+        const productCard = document.querySelector(`.product-card[data-product-id="${productId}"]`);
+        if (!productCard) return;
+
+        this.currentProduct = {
+            id: productId,
+            name: productCard.querySelector('.card-title').textContent,
+            price: parseFloat(productCard.dataset.price),
+            image: productCard.querySelector('img').src,
+            description: productCard.querySelector('.card-text').textContent
+        };
+
+        // Update modal content
+        document.getElementById('quickViewTitle').textContent = this.currentProduct.name;
+        document.getElementById('quickViewPrice').textContent = `${this.currentProduct.price.toFixed(2)} TL`;
+        document.getElementById('quickViewDescription').textContent = this.currentProduct.description;
+        document.getElementById('quickViewImage').innerHTML = `<img src="${this.currentProduct.image}" alt="${this.currentProduct.name}">`;
+        document.getElementById('quickViewQuantity').value = 1;
+    }
+}
+
+// Wishlist Manager
+class WishlistManager {
+    constructor() {
+        this.wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        this.init();
+    }
+
+    init() {
+        this.updateWishlistButtons();
+        this.bindEvents();
+    }
+
+    bindEvents() {
+        document.querySelectorAll('.toggle-favorite').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productCard = e.target.closest('.product-card');
+                const productId = productCard.dataset.productId;
+                this.toggleWishlist(productId);
+            });
+        });
+    }
+
+    toggleWishlist(productId) {
+        const index = this.wishlist.indexOf(productId);
+        if (index === -1) {
+            this.wishlist.push(productId);
+            notificationManager.showNotification('Ürün favorilere eklendi', 'success');
+        } else {
+            this.wishlist.splice(index, 1);
+            notificationManager.showNotification('Ürün favorilerden çıkarıldı', 'info');
+        }
+        localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+        this.updateWishlistButtons();
+    }
+
+    updateWishlistButtons() {
+        document.querySelectorAll('.toggle-favorite').forEach(button => {
+            const productId = button.closest('.product-card').dataset.productId;
+            const icon = button.querySelector('i');
+            if (this.wishlist.includes(productId)) {
+                button.classList.add('active');
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+            } else {
+                button.classList.remove('active');
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+            }
+        });
+    }
+}
+
+// Coupon Manager
+class CouponManager {
+    constructor() {
+        this.coupons = {
+            'WELCOME10': 10,
+            'PETSALE20': 20
+        };
+        this.init();
+    }
+
+    init() {
+        document.getElementById('applyCoupon').addEventListener('click', () => {
+            const code = document.getElementById('couponCode').value.toUpperCase();
+            this.applyCoupon(code);
+        });
+
+        document.querySelectorAll('.copy-coupon').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const code = e.target.closest('.coupon-item').querySelector('strong').textContent;
+                navigator.clipboard.writeText(code);
+                notificationManager.showNotification('Kupon kodu kopyalandı', 'success');
+            });
+        });
+    }
+
+    applyCoupon(code) {
+        const discount = this.coupons[code];
+        if (discount) {
+            cartManager.applyDiscount(discount);
+            notificationManager.showNotification(`%${discount} indirim uygulandı`, 'success');
+            bootstrap.Modal.getInstance(document.getElementById('couponModal')).hide();
+        } else {
+            notificationManager.showNotification('Geçersiz kupon kodu', 'error');
+        }
+    }
+}
+
+// Rating Manager
+class RatingManager {
+    constructor() {
+        this.ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+        this.init();
+    }
+
+    init() {
+        this.bindRatingEvents();
+        this.loadRatings();
+    }
+
+    bindRatingEvents() {
+        document.querySelectorAll('.rating-input i').forEach(star => {
+            star.addEventListener('mouseover', (e) => this.handleStarHover(e));
+            star.addEventListener('mouseout', (e) => this.handleStarOut(e));
+            star.addEventListener('click', (e) => this.handleStarClick(e));
+        });
+
+        document.getElementById('reviewForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.submitReview();
+        });
+    }
+
+    handleStarHover(e) {
+        const rating = parseInt(e.target.dataset.rating);
+        this.updateStars(rating, true);
+    }
+
+    handleStarOut(e) {
+        const container = e.target.closest('.rating-input');
+        const selected = container.querySelector('.selected');
+        const rating = selected ? parseInt(selected.dataset.rating) : 0;
+        this.updateStars(rating, true);
+    }
+
+    handleStarClick(e) {
+        const rating = parseInt(e.target.dataset.rating);
+        const container = e.target.closest('.rating-input');
+        container.querySelectorAll('i').forEach(star => star.classList.remove('selected'));
+        e.target.classList.add('selected');
+        this.updateStars(rating, false);
+    }
+
+    updateStars(rating, isHover) {
+        const container = document.querySelector('.rating-input');
+        container.querySelectorAll('i').forEach((star, index) => {
+            if (index < rating) {
+                star.classList.remove('far');
+                star.classList.add('fas');
+            } else {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            }
+        });
+    }
+
+    submitReview() {
+        const form = document.getElementById('reviewForm');
+        const rating = form.querySelector('.selected')?.dataset.rating;
+        if (!rating) {
+            notificationManager.showNotification('Lütfen bir puan seçin', 'warning');
+            return;
+        }
+
+        const review = {
+            rating: parseInt(rating),
+            title: form.querySelector('input[type="text"]').value,
+            comment: form.querySelector('textarea').value,
+            date: new Date().toISOString()
+        };
+
+        const productId = this.currentProductId;
+        if (!this.ratings[productId]) {
+            this.ratings[productId] = [];
+        }
+        this.ratings[productId].push(review);
+        localStorage.setItem('ratings', JSON.stringify(this.ratings));
+
+        notificationManager.showNotification('Değerlendirmeniz kaydedildi', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('reviewModal')).hide();
+        form.reset();
+    }
+}
+
+// Initialize new features
+document.addEventListener('DOMContentLoaded', () => {
+    window.cartManager = new CartManager();
+    window.quickViewManager = new QuickViewManager();
+    window.wishlistManager = new WishlistManager();
+    window.couponManager = new CouponManager();
+    window.ratingManager = new RatingManager();
+});

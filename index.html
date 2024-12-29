@@ -28,6 +28,40 @@
         height: 400px;
         border-radius: 8px;
       }
+
+      /* Yeni eklenen stiller */
+      .rating-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .stars {
+        color: #ddd;
+        cursor: pointer;
+      }
+
+      .stars i {
+        margin-right: 2px;
+      }
+
+      .stars i.active {
+        color: #ffd700;
+      }
+
+      #notification-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .search-container {
+        margin: 20px 0;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
     </style>
   </head>
   <body>
@@ -68,6 +102,12 @@
               <a class="nav-link" href="#iletisim">İletişim</a>
             </li>
           </ul>
+          <div class="d-flex align-items-center">
+            <div class="cart-icon me-3 position-relative">
+              <i class="fas fa-shopping-cart" data-bs-toggle="modal" data-bs-target="#cartModal"></i>
+              <span class="cart-count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -131,40 +171,123 @@
     <section id="urunler" class="py-5">
       <div class="container">
         <h2 class="text-center mb-4">Ürünlerimiz</h2>
+        
+        <!-- Arama kutusu -->
+        <div class="search-container">
+          <div class="input-group mb-4">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <input type="text" id="searchInput" class="form-control" placeholder="Ürün ara...">
+          </div>
+        </div>
+
         <div class="filter-buttons text-center mb-4">
           <button class="filter-btn active" data-filter="all">Tümü</button>
           <button class="filter-btn" data-filter="kedi">Kedi</button>
           <button class="filter-btn" data-filter="kopek">Köpek</button>
           <button class="filter-btn" data-filter="kus">Kuş</button>
         </div>
-        <div class="row">
+        <div class="row" id="product-list">
           <div class="col-md-4 mb-4">
-            <div class="product-card" data-category="kedi">
+            <div class="card product-card" data-product-id="1" data-price="199.99" data-category="kedi">
+              <div class="product-actions">
+                <button class="btn btn-light btn-sm quick-view" data-bs-toggle="modal" data-bs-target="#quickViewModal" data-product-id="1">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-light btn-sm toggle-favorite">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
               <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119" class="card-img-top" alt="Premium Kedi Maması">
               <div class="card-body">
-                <h5>Premium Kedi Maması</h5>
-                <p class="price">149.99 ₺</p>
-                <button class="btn btn-primary add-to-cart" data-product="Premium Kedi Maması" data-price="149.99">Sepete Ekle</button>
+                <div class="product-rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="far fa-star text-warning"></i>
+                  <small class="ms-2">(4.0)</small>
+                </div>
+                <h5 class="card-title">Premium Kedi Maması</h5>
+                <p class="card-text">Yüksek protein içerikli, tüm ırklar için uygun kedi maması.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="price">199.99 TL</span>
+                    <small class="text-success d-block">Stokta</small>
+                  </div>
+                  <button class="btn btn-primary add-to-cart">
+                    <i class="fas fa-shopping-cart me-2"></i>Sepete Ekle
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+
           <div class="col-md-4 mb-4">
-            <div class="product-card" data-category="kopek">
+            <div class="card product-card" data-product-id="2" data-price="149.99" data-category="kopek">
+              <div class="product-actions">
+                <button class="btn btn-light btn-sm quick-view" data-bs-toggle="modal" data-bs-target="#quickViewModal" data-product-id="2">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-light btn-sm toggle-favorite">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
               <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97" class="card-img-top" alt="Köpek Oyuncağı">
               <div class="card-body">
-                <h5>Köpek Oyuncağı</h5>
-                <p class="price">79.99 ₺</p>
-                <button class="btn btn-primary add-to-cart" data-product="Köpek Oyuncağı" data-price="79.99">Sepete Ekle</button>
+                <div class="product-rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="far fa-star text-warning"></i>
+                  <small class="ms-2">(4.0)</small>
+                </div>
+                <h5 class="card-title">Köpek Oyuncağı</h5>
+                <p class="card-text">Dayanıklı ve eğlenceli köpek oyuncağı.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="price">149.99 TL</span>
+                    <small class="text-success d-block">Stokta</small>
+                  </div>
+                  <button class="btn btn-primary add-to-cart">
+                    <i class="fas fa-shopping-cart me-2"></i>Sepete Ekle
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+
           <div class="col-md-4 mb-4">
-            <div class="product-card" data-category="kedi">
+            <div class="card product-card" data-product-id="3" data-price="49.99" data-category="kedi">
+              <div class="product-actions">
+                <button class="btn btn-light btn-sm quick-view" data-bs-toggle="modal" data-bs-target="#quickViewModal" data-product-id="3">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-light btn-sm toggle-favorite">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
               <img src="https://cdn.pixabay.com/photo/2020/03/31/16/18/cat-4988407_1280.jpg" class="card-img-top" alt="Kedi Kumu">
               <div class="card-body">
-                <h5>Bentonit Kedi Kumu</h5>
-                <p class="price">199.99 ₺</p>
-                <button class="btn btn-primary add-to-cart" data-product="Bentonit Kedi Kumu" data-price="199.99">Sepete Ekle</button>
+                <div class="product-rating mb-2">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="far fa-star text-warning"></i>
+                  <small class="ms-2">(4.0)</small>
+                </div>
+                <h5 class="card-title">Bentonit Kedi Kumu</h5>
+                <p class="card-text">Yüksek emici özellikli bentonit kedi kumu.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="price">49.99 TL</span>
+                    <small class="text-success d-block">Stokta</small>
+                  </div>
+                  <button class="btn btn-primary add-to-cart">
+                    <i class="fas fa-shopping-cart me-2"></i>Sepete Ekle
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -182,7 +305,7 @@
               <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800" class="card-img-top" alt="Köpek Bakımı" style="height: 200px; object-fit: cover;">
               <div class="card-body">
                 <h5 class="card-title">Köpek Bakımı Hakkında İpuçları</h5>
-                <p class="card-text">Köpeğinizin sağlıklı ve mutlu kalması için önemli bakım ipuçları...</p>
+                <p class="card-text">Köpeğinizin sağlıklı ve mutlu bir yaşam sürmesi için önemli bakım ipuçları...</p>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blogModal1">Devamını Oku</button>
               </div>
             </div>
@@ -270,7 +393,7 @@
             <h6>1. Tutarlı Olun</h6>
             <p>Eğitimde tutarlılık çok önemlidir. Tüm aile üyeleri aynı kuralları uygulamalıdır.</p>
             <h6>2. Pozitif Pekiştirme</h6>
-            <p>Ceza yerine ödül temelli eğitim yaklaşımı kullanın. Bu, evcil hayvanınızın daha hızlı öğrenmesini sağlar.</p>
+            <p>Ceza yerine ödül temelli eğitim yaklaşımı kullanın. Bu sayede evcil hayvanınız daha hızlı öğrenir.</p>
             <h6>3. Sabırlı Olun</h6>
             <p>Her evcil hayvanın öğrenme hızı farklıdır. Sabırlı olun ve küçük ilerlemeleri takdir edin.</p>
           </div>
@@ -493,17 +616,187 @@
       </div>
     </section>
 
-    <!-- Canlı Destek -->
-    <div class="live-chat-widget">
-      <button class="btn btn-primary rounded-circle" id="liveChatBtn">
-        <i class="fas fa-comments"></i>
-      </button>
-    </div>
+    <!-- Canlı Destek Butonu -->
+<div class="live-chat-widget">
+  <button class="btn btn-primary rounded-circle" id="liveChatBtn">
+    <i class="fas fa-comments"></i>
+  </button>
+</div>
 
     <!-- Tema değiştirme butonu -->
     <button class="theme-toggle" id="themeToggle">
       <i class="fas fa-moon"></i>
     </button>
+
+    <!-- Quick View Modal -->
+    <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ürün Detayı</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div id="quickViewImage" class="mb-3">
+                  <!-- Product image will be loaded here -->
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h4 id="quickViewTitle"></h4>
+                <div class="product-rating mb-2">
+                  <div id="quickViewRating"></div>
+                </div>
+                <div class="price-section mb-3">
+                  <h5 id="quickViewPrice"></h5>
+                  <span id="quickViewStock" class="badge bg-success">Stokta</span>
+                </div>
+                <div class="description mb-3">
+                  <p id="quickViewDescription"></p>
+                </div>
+                <div class="quantity-section mb-3">
+                  <label>Adet:</label>
+                  <div class="input-group" style="width: 130px;">
+                    <button class="btn btn-outline-secondary" type="button" id="decreaseQuantity">-</button>
+                    <input type="number" class="form-control text-center" value="1" min="1" id="quickViewQuantity">
+                    <button class="btn btn-outline-secondary" type="button" id="increaseQuantity">+</button>
+                  </div>
+                </div>
+                <button class="btn btn-primary w-100 mb-2 quick-view-add-to-cart">
+                  <i class="fas fa-shopping-cart me-2"></i>Sepete Ekle
+                </button>
+                <button class="btn btn-outline-primary w-100 quick-view-add-to-wishlist">
+                  <i class="far fa-heart me-2"></i>Favorilere Ekle
+                </button>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-12">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#description">Açıklama</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#reviews">Değerlendirmeler</a>
+                  </li>
+                </ul>
+                <div class="tab-content p-3 border border-top-0">
+                  <div class="tab-pane fade show active" id="description">
+                    <div id="quickViewFullDescription"></div>
+                  </div>
+                  <div class="tab-pane fade" id="reviews">
+                    <div id="quickViewReviews">
+                      <!-- Reviews will be loaded here -->
+                    </div>
+                    <button class="btn btn-outline-primary mt-3" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                      <i class="fas fa-star me-2"></i>Değerlendirme Yap
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ürün Değerlendirmesi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="reviewForm">
+              <div class="mb-3">
+                <label class="form-label">Puanınız</label>
+                <div class="rating-input">
+                  <i class="far fa-star" data-rating="1"></i>
+                  <i class="far fa-star" data-rating="2"></i>
+                  <i class="far fa-star" data-rating="3"></i>
+                  <i class="far fa-star" data-rating="4"></i>
+                  <i class="far fa-star" data-rating="5"></i>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Başlık</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Yorumunuz</label>
+                <textarea class="form-control" rows="3" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Gönder</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coupon Modal -->
+    <div class="modal fade" id="couponModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">İndirim Kuponu Uygula</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Kupon kodunu girin" id="couponCode">
+              <button class="btn btn-primary" type="button" id="applyCoupon">Uygula</button>
+            </div>
+            <div id="couponMessage"></div>
+            <hr>
+            <div class="available-coupons">
+              <h6>Mevcut Kuponlar</h6>
+              <div class="coupon-item d-flex justify-content-between align-items-center p-2 border rounded mb-2">
+                <div>
+                  <strong>WELCOME10</strong>
+                  <small class="d-block text-muted">%10 indirim</small>
+                </div>
+                <button class="btn btn-sm btn-outline-primary copy-coupon">Kopyala</button>
+              </div>
+              <div class="coupon-item d-flex justify-content-between align-items-center p-2 border rounded mb-2">
+                <div>
+                  <strong>PETSALE20</strong>
+                  <small class="d-block text-muted">%20 indirim</small>
+                </div>
+                <button class="btn btn-sm btn-outline-primary copy-coupon">Kopyala</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel">Alışveriş Sepeti</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="cart-items" class="mb-3">
+              <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="cart-total d-flex justify-content-between">
+              <strong>Toplam:</strong>
+              <span id="cart-total">0.00 TL</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            <button type="button" class="btn btn-primary" id="checkout-btn">Satın Al</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Sosyal Medya -->
     <footer class="bg-primary text-white text-center py-3">
